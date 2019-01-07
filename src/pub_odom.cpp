@@ -56,6 +56,11 @@ int main(int argc, char** argv){
     //since all odometry is 6DOF we'll need a quaternion created from yaw
     geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(th);
 
+    //check null quaternion
+    if(odom_quat.x == 0.0 && odom_quat.y == 0.0 && odom_quat.z == 0.0 && odom_quat.w == 0.0){
+      odom_quat.w = 1.0;
+    } 
+
     //first, we'll publish the transform over tf
     geometry_msgs::TransformStamped odom_trans;
     odom_trans.header.stamp = current_time;
@@ -90,8 +95,10 @@ int main(int argc, char** argv){
     //publish the message
     odom_pub.publish(odom);
 
+
     last_time = current_time;
     ros::spinOnce();
     r.sleep();
+    
   }
 }
