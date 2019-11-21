@@ -1,0 +1,51 @@
+<!--
+ゲームパッド操作サンプルのlaunch
+
+rosserialを使ってROSとメガローバーを接続し、PCにゲームパッドを接続してから起動してください。
+
+起動コマンド：roslaunch megarover_samples joycon.launch
+ -->
+
+<launch>
+	<!-- arguments -->
+	<arg name="model" default="$(find megarover_samples)/robots/megarover.urdf.xacro"/>
+	<arg name="gui" default="false"/>
+
+	<!-- prameters -->
+	<param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)"/>r
+	<param name="use_gui" value="$(arg gui)"/>
+
+	<!-- オドメトリの配信ノード -->
+  <node pkg="megarover_samples" type="pub_odom" name="pub_odom" />
+
+	<!-- メガローバーのロボットモデルの配信ノード -->
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <!-- LRFのデバイスドライバノード -->
+  <node name="horizontal_laser" pkg="urg_node"
+    type="urg_node" >
+    <param name="serial_port" value="/dev/ttyACM0" />
+    <param name="frame_id" value="horizontal_laser_link" />
+    <param name="angle_min" value="-1.57" />
+    <param name="angle_max" value="1.57" />
+  </node>
+
+  <!-- joy node -->
+  <node pkg="joy" type="joy_node" name="megarover_joy" respawn="true" >
+    <param name="dev" type="string" value="/dev/input/js0" /> <!-- デバイスファイルパスを正しく設定してください -->
+    <param name="deadzone" value="0.05"/>
+  </node>
+
+  <!-- joycon -->
+  <node pkg="megarover_samples" type="joycon" name="joycon" respawn="true">
+    <param name="axis_linear" value="1" />
+    <param name="axis_angular" value="0" />
+    <param name="scale_linear" value="0.6" />
+    <param name="scale_angular" value="0.8" />
+    <param name="safety_button" value="2" />
+  </node>
+   
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find megarover_samples)/configuration_files/rviz/joycon_urg.rviz"/>
+
+</launch>
