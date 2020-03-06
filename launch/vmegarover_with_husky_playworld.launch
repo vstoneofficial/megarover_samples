@@ -1,0 +1,39 @@
+<!--
+huskyより配布されているサンプル空間でGazebo上のシミュレータを立ち上げるlaunch
+
+シミュレータを利用する場合は、まずこれらのlaunchでGazeboとシミュレータを立ち上げてください。
+
+起動コマンド：roslaunch megarover_samples vmegarover_with_husky_world.launch
+-->
+<launch>
+
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="model" default="$(find megarover_samples)/robots/vmegarover.urdf.xacro"/>
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+	<arg name="world_name" value="$(find megarover_samples)/worlds/clearpath_playpen.world"/>
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="robot_description"
+    command="$(find xacro)/xacro.py '$(arg model)'" />
+
+  <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    args="-urdf -model vmegarover -param robot_description"/>
+
+  <!-- ros_control motoman launch file -->
+  <include file="$(find megarover_samples)/launch/vmegarover_control.launch"/>
+
+</launch>

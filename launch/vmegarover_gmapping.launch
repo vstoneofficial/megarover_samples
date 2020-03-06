@@ -1,0 +1,28 @@
+<!--
+SLAM（gmapping）サンプルのlaunch（シミュレータ用）
+
+roslauchを使ってGazebo上でメガローバーを起動してから使用してください。
+
+地図を生成していくためにはメガローバーを手動で移動させる必要があります。
+キーボード操作サンプルまたはマウス（タッチパッド）操作サンプルを使用してください。
+
+起動コマンド： roslaunch megarover_samples vmegarover_gmapping.launch
+-->
+
+<launch>
+
+  <!-- gmapping -->
+  <node pkg="gmapping" type="slam_gmapping" name="mapper">
+    <param name="base_frame" value="base_link"/>
+    <param name="odom_frame" value="odom"/>
+    <param name="maxUrange" value="30.0" type="double" />
+    <param name="delta" value="0.05" />
+    <param name="xmax" value="50" type="double" />
+    <param name="ymax" value="50" type="double" />
+    <param name="xmin" value="-50" type="double" />
+    <param name="ymin" value="-50" type="double" />
+  </node>
+
+  <!-- rviz(視覚化ツール) -->
+  <node pkg="rviz" type="rviz" args="-d '$(find megarover_samples)/configuration_files/rviz/gmapping.rviz'" name="visualizer" respawn="true" />
+</launch>

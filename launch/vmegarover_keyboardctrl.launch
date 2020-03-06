@@ -1,0 +1,25 @@
+<!--
+キーボード操作サンプルのlaunch（シミュレータ用）
+
+roslauchを使ってGazebo上でメガローバーを起動してから使用してください。
+
+起動コマンド：roslaunch megarover_samples vmegarover_keyboardctrl.launch
+
+操作方法：
+
+下記の9個のキーが、kキーを中心としてそれぞれの方向にロボットを移動させます。
+kキーを押すと停止します。
+
+     前
+   u  i  o
+左 j  k  l 右
+   m  ,  .
+     後
+
+-->
+
+<launch>
+  <!-- キーボードによる制御ノード -->
+  <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop_twist_keyboard" args="/cmd_vel:=/vmegarover/diff_drive_controller/cmd_vel">
+  </node>
+</launch>
