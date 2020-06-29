@@ -21,7 +21,7 @@ Navigationサンプルのlaunch（シミュレータ用）
   -->
   <!--<include file="$(find amcl)/examples/amcl_diff.launch" />-->
   <node pkg="amcl" type="amcl" name="amcl" output="screen" args="/scan:=/scan">
-　　　　<param name="gui_publish_rate" value="5.0"/>
+    <param name="gui_publish_rate" value="5.0"/>
     <param name="odom_model_type" value="diff"/>
     <param name="min_particles" value="500"/>
     <param name="max_particles" value="2000"/>
@@ -61,8 +61,8 @@ Navigationサンプルのlaunch（シミュレータ用）
     <rosparam file="$(find megarover_samples)/configuration_files/megarover_global_costmap_params.yaml" command="load" />
     <rosparam file="$(find megarover_samples)/configuration_files/vmegarover_dwa_local_planner_params.yaml" command="load" />
     <rosparam file="$(find megarover_samples)/configuration_files/megarover_move_base_params.yaml" command="load" />
-		<remap from="cmd_vel" to="/vmegarover/diff_drive_controller/cmd_vel" />
-		<!-- remap from="odom" to="/vmegarover/diff_drive_controller/odom" / -->
+    <remap from="cmd_vel" to="/vmegarover/diff_drive_controller/cmd_vel" />
+    <!-- remap from="odom" to="/vmegarover/diff_drive_controller/odom" / -->
   </node>
 
   <!-- Rviz -->

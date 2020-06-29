@@ -12,15 +12,12 @@
   <node pkg="tf" type="static_transform_publisher" name="stp_laser" args="0.1 0 0.08 3.14159 3.14159 0 base_link horizontal_laser_link 1" />
 
   <!-- LRFのデバイスドライバノード -->
-  <node name="horizontal_laser" pkg="urg_node"
-    type="urg_node" >
+  <node name="horizontal_laser" pkg="urg_node" type="urg_node" >
     <param name="serial_port" value="/dev/ttyACM0" />　<!-- デバイスドライバファイルのパス -->
     <param name="frame_id" value="horizontal_laser_link" />
     <param name="angle_min" value="-1.57" />　<!-- LRFの有効検出角度（下限） -->
     <param name="angle_max" value="1.57" />  <!-- LRFの有効検出角度（上限） -->
   </node>
-
-  
  
   <!-- mapサーバー -->
   <arg name="map_file" default="$(find megarover_samples)/map/gmap22.yaml"/>　<!--マップファイルのパスの指定 -->
@@ -33,7 +30,7 @@
   -->
   <!--<include file="$(find amcl)/examples/amcl_diff.launch" />-->
   <node pkg="amcl" type="amcl" name="amcl" output="screen" args="/scan:=/scan">
-　　　　<param name="gui_publish_rate" value="5.0"/>
+    <param name="gui_publish_rate" value="5.0"/>
     <param name="odom_model_type" value="diff"/>
     <param name="min_particles" value="500"/>
     <param name="max_particles" value="2000"/>
