@@ -9,12 +9,12 @@
   <node pkg="megarover_samples" type="pub_odom" name="pub_odom" />
 
   <!-- メガローバーの回転中心からLRFまでの座標変換 -->
-  <node pkg="tf" type="static_transform_publisher" name="stp_laser" args="0.1 0 0.08 3.14159 3.14159 0 base_link horizontal_laser_link 1" />
+  <node pkg="tf" type="static_transform_publisher" name="stp_laser" args="0.1 0 0.08 3.14159 3.14159 0 base_link lrf_link 1" />
 
   <!-- LRFのデバイスドライバノード -->
   <node name="horizontal_laser" pkg="urg_node" type="urg_node" >
     <param name="serial_port" value="/dev/ttyACM0" />　<!-- デバイスドライバファイルのパス -->
-    <param name="frame_id" value="horizontal_laser_link" />
+    <param name="frame_id" value="lrf_link" />
     <param name="angle_min" value="-1.57" />　<!-- LRFの有効検出角度（下限） -->
     <param name="angle_max" value="1.57" />  <!-- LRFの有効検出角度（上限） -->
   </node>
