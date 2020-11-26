@@ -16,8 +16,8 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   tf
   tf2
-	urdf
-	xacro
+  urdf
+  xacro
   #move_base
 )
 
