@@ -33,13 +33,13 @@
   -->
   <!--<include file="$(find amcl)/examples/amcl_diff.launch" />-->
   <node pkg="amcl" type="amcl" name="amcl" output="screen" args="/scan:=/scan">
-　　　　<param name="gui_publish_rate" value="5.0"/>
+    <param name="gui_publish_rate" value="5.0"/>
     <param name="odom_model_type" value="diff"/>
     <param name="min_particles" value="500"/>
     <param name="max_particles" value="2000"/>
     <param name="kld_err" value="0.05"/>
     <param name="kld_z" value="0.95"/>
-    <param name="odom_alpha1" value="7.0"/>		
+    <param name="odom_alpha1" value="7.0"/>
     <param name="odom_alpha2" value="10.0"/>
     <param name="odom_alpha3" value="7.0"/>
     <param name="odom_alpha4" value="10.0"/>

@@ -7,20 +7,20 @@ rosserialを使ってROSとメガローバーを接続し、PCにゲームパッ
  -->
 
 <launch>
-	<!-- arguments -->
-	<arg name="model" default="$(find megarover_samples)/robots/megarover.urdf.xacro"/>
-	<arg name="gui" default="false"/>
+  <!-- arguments -->
+  <arg name="model" default="$(find megarover_samples)/robots/megarover.urdf.xacro"/>
+  <arg name="gui" default="false"/>
 
-	<!-- prameters -->
-	<param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)"/>r
-	<param name="use_gui" value="$(arg gui)"/>
+  <!-- prameters -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)"/>r
+  <param name="use_gui" value="$(arg gui)"/>
 
-	<!-- オドメトリの配信ノード -->
+  <!-- オドメトリの配信ノード -->
   <node pkg="megarover_samples" type="pub_odom" name="pub_odom" />
 
-	<!-- メガローバーのロボットモデルの配信ノード -->
-	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
-	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <!-- メガローバーのロボットモデルの配信ノード -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
   <!-- LRFのデバイスドライバノード -->
   <node name="horizontal_laser" pkg="urg_node"
@@ -46,6 +46,6 @@ rosserialを使ってROSとメガローバーを接続し、PCにゲームパッ
     <param name="safety_button" value="2" />
   </node>
    
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find megarover_samples)/configuration_files/rviz/joycon_urg.rviz"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find megarover_samples)/configuration_files/rviz/joycon_urg.rviz"/>
 
 </launch>

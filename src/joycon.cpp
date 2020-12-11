@@ -62,13 +62,11 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "joycon");
   JoyCtrlMegarover joy_ctrl_megarover;
 
-	ros::NodeHandle n;
+  ros::NodeHandle n;
 
-	ros::Rate r(10);
+  ros::Rate r(10);
   while(n.ok()){
-
-  	ros::spinOnce();
-		r.sleep();
-	}
-  
+    ros::spinOnce();
+    r.sleep();
+  }
 }
