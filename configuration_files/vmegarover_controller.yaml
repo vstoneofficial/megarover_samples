@@ -13,7 +13,7 @@ vmegarover:
     twist_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
 
     # 車輪の半径と両輪の軸間距離
-    wheel_separation : 0.313982
+    wheel_separation : 0.28398
     wheel_radius : 0.076
 
     wheel_separation_multiplier: 1.0 # default: 1.0
