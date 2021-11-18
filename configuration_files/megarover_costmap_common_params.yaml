@@ -3,6 +3,7 @@
 # ロボットの大きさに関するパラメータ
 footprint: [[0.1, -0.15], [0.1, 0.15], [-0.2, 0.15], [-0.2, -0.15]]
 
+#obstacle_layerの設定
 obstacle_layer:
   enabled: true
 
@@ -10,13 +11,10 @@ obstacle_layer:
   obstacle_range: 3.5
 
   # これ以下の距離に物体が検出された場合、ロボットとその物体との間に障害物はないものとして扱う
-  raytrace_range: 5.0
+  raytrace_range: 30.0
 
   # LRFの設定
   observation_sources: laser_scan_sensor
   laser_scan_sensor: {sensor_frame: lrf_link, data_type: LaserScan, topic: scan, marking: true, clearing: true}
 
-inflation_layer:
-  enabled: true
-  inflation_radius: 0.2
 

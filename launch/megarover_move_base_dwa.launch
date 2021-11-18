@@ -5,20 +5,73 @@
 
 <launch>
 
+  <!-- 引数 -->
+  <arg name="rover_type"  default="mega2"  doc="mega2 / f120" />
+  <arg name="lrf"         default="urg"       doc="urg / tg30"/>
+
   <!-- オドメトリの配信ノード -->
   <node pkg="megarover_samples" type="pub_odom" name="pub_odom" />
 
   <!-- メガローバーの回転中心からLRFまでの座標変換 -->
   <node pkg="tf" type="static_transform_publisher" name="stp_laser" args="0.1 0 0.08 3.14159 3.14159 0 base_link lrf_link 1" />
 
-  <!-- LRFのデバイスドライバノード -->
-  <node name="horizontal_laser" pkg="urg_node"
-    type="urg_node" >
-    <param name="serial_port" value="/dev/ttyACM0" />　<!-- デバイスドライバファイルのパス -->
-    <param name="frame_id" value="lrf_link" />
-    <param name="angle_min" value="-1.57" />　<!-- LRFの有効検出角度（下限） -->
-    <param name="angle_max" value="1.57" />  <!-- LRFの有効検出角度（上限） -->
-  </node>
+  <!-- URG-04LX-UG01の場合 -->
+  <group if="$(eval lrf=='urg')">
+　　<!-- LRFのデバイスファイルパス -->
+　　<arg name="port_urg" default="/dev/ttyACM0" /> <!-- LRFのデバイスファイルパスを設定してください -->
+
+　　<!-- メガローバーの旋回中心からLRFまでの座標変換の設定 -->
+    <group if="$(eval rover_type=='mega2')">
+　　  <!-- メガローバーVer2.0 or Ver2.1の場合 -->
+      <!-- argsの項でLRFの位置を調整できます。 args="x y z y p r" -->
+      <node pkg="tf" type="static_transform_publisher" name="stp_laser" args="0.1 0 0.08 0 0 3.14159 base_link lrf_link 1" />
+    </group>
+    <group if="$(eval rover_type=='f120')">
+      <!-- メガローバーF120の場合 -->
+      <node pkg="tf" type="static_transform_publisher" name="stp_laser" args="0.13 0 0.10 0 0 0 base_link lrf_link 1" />
+    </group>
+
+　　<!-- LRFのデバイスドライバノード -->
+　　<node pkg="urg_node" type="urg_node" name="urg_node">
+       <param name="serial_port" value="$(arg port_urg)" />
+       <param name="frame_id" value="lrf_link" />
+       <param name="angle_min" value="-1.57" /> <!-- 視野角の指定（最小値） -->
+       <param name="angle_max" value="1.57" />  <!-- 視野角の指定（最大値） -->
+　　</node>
+  </group>
+
+  <!-- YDLiDAR TG30の場合 -->
+  <group if="$(eval lrf=='tg30')">
+    <!-- メガローバーの旋回中心からLRFまでの座標変換の設定 -->
+    <group if="$(eval rover_type=='mega2')">
+　　  <!-- メガローバーVer2.0 or Ver2.1の場合 -->
+      <!-- argsの項でLRFの位置を調整できます。 args="x y z y p r" -->
+      <node pkg="tf" type="static_transform_publisher" name="stp_laser" args="0.12 0 0.08 0 0 0 base_link lrf_link 1" />
+    </group>
+    <group if="$(eval rover_type=='f120')">
+      <!-- メガローバーF120の場合 -->
+      <node pkg="tf" type="static_transform_publisher" name="stp_laser" args="0.15 0 0.10 0 0 0 base_link lrf_link 1" />
+    </group>
+
+    <!-- YDLiDARデバイスドライバノード-->
+    <node name="ydlidar_node"  pkg="ydlidar_ros"  type="ydlidar_node" output="screen" respawn="false" >
+      <param name="port"         type="string" value="/dev/ydlidar"/>  <!-- LRFのデバイスファイルパス -->
+      <param name="baudrate"         type="int" value="512000"/>  
+      <param name="frame_id"     type="string" value="lrf_link"/>
+      <param name="resolution_fixed"    type="bool"   value="true"/>
+      <param name="auto_reconnect"    type="bool"   value="true"/>
+      <param name="reversion"    type="bool"   value="true"/>
+      <param name="angle_min"    type="double" value="-180" />  <!-- センサの正面を0度する視野角の指定（最小値） -->
+      <param name="angle_max"    type="double" value="180" />   <!-- センサの正面を0度する視野角の指定（最大値） -->
+      <param name="range_min"    type="double" value="0.01" />
+      <param name="range_max"    type="double" value="32.0" />
+      <param name="ignore_array" type="string" value="" />
+      <param name="frequency"    type="double" value="10"/>
+      <param name="samp_rate"    type="int"    value="20"/>
+      <param name="isTOFLidar"    type="bool"   value="true"/>
+    </node>
+
+  </group>
 
   
  

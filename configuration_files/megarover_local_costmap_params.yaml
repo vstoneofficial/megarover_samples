@@ -9,13 +9,16 @@ local_costmap:
   global_frame: odom
   robot_base_frame: base_link
 
+  #inflation_layerの設定
+  inflation_layer:
+    inflation_radius: 0.05
+
   # 更新頻度の設定
-  update_frequency: 5.0
+  update_frequency: 3.0
   publish_frequency: 3.0
 
-  rolling_window: true
-
   # ローカルコストマップの計算範囲
+  rolling_window: true
   width: 3.0
   height: 3.0
 
@@ -24,4 +27,6 @@ local_costmap:
 
   # タイムスタンプのずれの許容量
   transform_tolerance: 0.5
+
+  
 
