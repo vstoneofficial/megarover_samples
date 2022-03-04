@@ -61,8 +61,6 @@ Navigationサンプルのlaunch（シミュレータ用）
     <rosparam file="$(find megarover_samples)/configuration_files/megarover_global_costmap_params.yaml" command="load" />
     <rosparam file="$(find megarover_samples)/configuration_files/vmegarover_dwa_local_planner_params.yaml" command="load" />
     <rosparam file="$(find megarover_samples)/configuration_files/megarover_move_base_params.yaml" command="load" />
-    <remap from="cmd_vel" to="/vmegarover/diff_drive_controller/cmd_vel" />
-    <!-- remap from="odom" to="/vmegarover/diff_drive_controller/odom" / -->
   </node>
 
   <!-- Rviz -->
